@@ -35,7 +35,7 @@ export function BurgerDetails({ id, restaurantId, name, description, imageUrl, g
       {/* Contenido de texto */}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <h4 className="font-bold text-white text-sm sm:text-base md:text-lg truncate w-full block">{name}</h4>
-        <p className="text-white text-xs sm:text-sm truncate w-full block whitespace-nowrap overflow-hidden text-ellipsis">{description}</p>
+        <p className="text-white text-xs sm:text-sm line-clamp-2">{description}</p>
       </div>
       
       {/* Círculo de calificación responsive */}
