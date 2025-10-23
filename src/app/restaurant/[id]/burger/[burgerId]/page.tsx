@@ -61,10 +61,10 @@ export default function BurgerPage({ params }: BurgerPageProps) {
   }
 
   // Create a map of userId to username
-  const userMap = new Map();
-  users?.forEach(u => {
-    userMap.set(u.id, u.name ?? u.email ?? 'Usuario');
-  });
+  const userMap = new Map<string, string>(); 
+users?.forEach(u => {
+  userMap.set(u.id, u.name ?? u.email ?? 'Usuario');
+});
 
   const handleAddCommentClick = () => {
     if (!user) {
@@ -105,7 +105,7 @@ export default function BurgerPage({ params }: BurgerPageProps) {
                 key={c.id}
                 username={userMap.get(c.userId) ?? 'Cargando...'} 
                 comment={c.content} 
-                grade={c.grade ?? 'N/A'} 
+                grade={c.grade ?? 0} 
               />
             ))
           ) : (

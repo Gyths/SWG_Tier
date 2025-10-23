@@ -14,7 +14,7 @@ const getBase64 = (file: File): Promise<string> => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
+    reader.onerror = () => reject(new Error('Failed to read file'));
   });
 };
 
@@ -42,7 +42,7 @@ export default function BurgerModal({ isOpen, onClose, restaurantId, onBurgerCre
   if (!isOpen) return null;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       setImage(e.target.files[0]);
     }
   };
@@ -59,7 +59,7 @@ export default function BurgerModal({ isOpen, onClose, restaurantId, onBurgerCre
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    if (e.dataTransfer.files?.[0]) {
       setImage(e.dataTransfer.files[0]);
     }
   };
@@ -190,9 +190,9 @@ export default function BurgerModal({ isOpen, onClose, restaurantId, onBurgerCre
           <button
             onClick={handleSubmit}
             className="bg-[#833F57] text-white px-8 py-2 rounded-lg hover:bg-[#B5416A] transition disabled:opacity-100"
-            disabled={createBurger.isLoading || !name.trim()}
+            disabled={createBurger.status === 'pending' || !name.trim()}
           >
-            {createBurger.isLoading ? 'Cocinando...' : 'Agregar'}
+            {createBurger.status === 'pending' ? 'Cocinando...' : 'Agregar'}
           </button>
         </div>
       </div>

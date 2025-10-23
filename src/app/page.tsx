@@ -34,7 +34,15 @@ export default function HomePage() {
     router.push(`/restaurant/${id}`);
   };
 
-  const handleAddRestaurant = (data: any) => {
+  interface NewRestaurantData {
+  name: string;
+  notes?: string;
+  location?: string;
+  justDelivery?: boolean;
+  image?: string | null;
+}
+
+  const handleAddRestaurant = (data: NewRestaurantData) => {
     console.log('New restaurant:', data);
     // TODO: send data to backend via TRPC mutation
   };
@@ -76,7 +84,7 @@ export default function HomePage() {
       {/* Restaurant Sections by Grade */}
       {gradeDivisions.map((grade) => {
         const filtered = restaurants?.filter(
-          (r) => r.grade >= grade.min && r.grade <= grade.max
+          (r) => r.grade !== null && r.grade >= grade.min && r.grade <= grade.max
         );
 
         if (!filtered || filtered.length === 0) return null;
@@ -92,7 +100,7 @@ export default function HomePage() {
                 <RestaurantCard
                   key={r.id}
                   name={r.name ?? ''}
-                  image={r.image}
+                  image={r.image ?? ''}
                   onClick={() => handleCardClick(r.id)}
                 />
               ))}

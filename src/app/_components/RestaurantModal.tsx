@@ -2,9 +2,18 @@
 import { useState } from 'react';
 import { api } from '~/trpc/react';
 
+  interface NewRestaurantData {
+  name: string;
+  notes?: string;
+  location?: string;
+  justDelivery?: boolean;
+  image?: string | null;
+}
+
 interface RestaurantModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit:(data:NewRestaurantData)=>void;
 }
 
 export default function RestaurantModal({ isOpen, onClose }: RestaurantModalProps) {
@@ -28,7 +37,7 @@ export default function RestaurantModal({ isOpen, onClose }: RestaurantModalProp
   if (!isOpen) return null;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       setImage(e.target.files[0]);
     }
   };
@@ -45,7 +54,7 @@ export default function RestaurantModal({ isOpen, onClose }: RestaurantModalProp
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    if (e.dataTransfer.files?.[0]) {
       setImage(e.dataTransfer.files[0]);
     }
   };
@@ -55,7 +64,7 @@ export default function RestaurantModal({ isOpen, onClose }: RestaurantModalProp
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
+      reader.onerror = () => reject(new Error('Error'));
     });
   };
 
@@ -207,9 +216,9 @@ export default function RestaurantModal({ isOpen, onClose }: RestaurantModalProp
           <button
             onClick={handleSubmit}
             className="bg-[#833F57] text-white px-8 py-2 rounded-lg hover:bg-[#B5416A] transition disabled:opacity-100"
-            disabled={createRestaurant.isLoading}
+            disabled={createRestaurant.status === 'pending'}
           >
-            {createRestaurant.isLoading ? 'Cocinando...' : 'Agregar'}
+            {createRestaurant.status ==='pending' ? 'Cocinando...' : 'Agregar'}
           </button>
         </div>
       </div>
