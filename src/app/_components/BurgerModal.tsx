@@ -87,11 +87,32 @@ export default function BurgerModal({ isOpen, onClose, restaurantId, onBurgerCre
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-[#F5F3EF] rounded-xl shadow-lg p-8 w-[90%] max-w-xl relative">
+    <div className="fixed inset-0 z-50 
+      flex 
+      justify-center 
+      bg-black/50 
+      overflow-y-auto 
+      md:items-center
+      "
+    >
+      <div className="relative 
+        bg-[#F5F3EF] 
+        rounded-xl 
+        shadow-lg 
+        w-full 
+        max-w-3xl 
+        mx-4 
+        my-8 
+        sm:my-16 
+        p-4 
+        sm:p-8 
+        overflow-y-auto
+        max-h-[90vh]
+        "
+      >
         <button
           onClick={onClose}
-          className="absolute top-4 right-6 text-gray-600 text-2xl hover:text-black"
+          className="absolute top-2 right-5 text-gray-600 text-3xl hover:text-black"
         >
           &times;
         </button>
