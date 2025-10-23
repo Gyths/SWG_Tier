@@ -76,7 +76,7 @@ export default function RestaurantPage() {
                 </Link>
               ))
             ) : (
-              <p className="text-gray-500">Pan con soledad por aqui.</p>
+              <p className="text-gray-500">Oh No! Un Veneco se robó la hamburguesa :O.</p>
             )}
           </div>
         </div>
