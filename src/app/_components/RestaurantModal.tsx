@@ -84,6 +84,7 @@ export default function RestaurantModal({ isOpen, onClose }: RestaurantModalProp
 
     createRestaurant.mutate({
       name,
+      grade: 0,
       notes,
       location,
       justDelivery: !isPhysical,
